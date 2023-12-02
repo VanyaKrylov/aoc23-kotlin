@@ -1,17 +1,34 @@
+import kotlin.IllegalArgumentException
+import kotlin.io.path.Path
+import kotlin.io.path.forEachLine
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    var sum = 0
+    Path("src/input/Day1.txt").forEachLine { line ->
+        val startNumber = parseNumber(line)
+        val endNumber = parseNumberInverse(line)
+        sum += startNumber * 10 + endNumber
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    println(sum)
+}
+
+fun parseNumber(s: String): Int {
+    for (c in s) {
+        if (c.isDigit()) {
+            return c.digitToInt()
+        }
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    throw IllegalArgumentException()
+}
 
-    val input = readInput("Day01")
-    part1(input).println()
-    part2(input).println()
+fun parseNumberInverse(s : String): Int {
+    for (i in s.length-1 downTo 0 step 1) {
+        if (s[i].isDigit()) {
+            return s[i].digitToInt()
+        }
+    }
+
+    throw IllegalArgumentException()
 }
