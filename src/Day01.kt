@@ -1,4 +1,4 @@
-import Day1.*
+import day1.*
 import kotlin.IllegalArgumentException
 import kotlin.io.path.Path
 import kotlin.io.path.forEachLine
@@ -17,8 +17,8 @@ fun main() {
     // Part 2, method 1
     var sum2 = 0
     Path("src/input/Day1.txt").forEachLine { line ->
-        val startNumber = find(line)
-        val endNumber = findReversed(line.reversed())
+        val startNumber = VocabularyTreeIterator.find(line)
+        val endNumber = VocabularyTreeIterator.findReversed(line.reversed())
         sum2 += startNumber * 10 + endNumber
     }
 
