@@ -1,8 +1,10 @@
+import Day1.*
 import kotlin.IllegalArgumentException
 import kotlin.io.path.Path
 import kotlin.io.path.forEachLine
 
 fun main() {
+    // Part 1
     var sum = 0
     Path("src/input/Day1.txt").forEachLine { line ->
         val startNumber = parseNumber(line)
@@ -12,15 +14,17 @@ fun main() {
 
     println(sum)
 
-    var sumP2 = 0
+    // Part 2, method 1
+    var sum2 = 0
     Path("src/input/Day1.txt").forEachLine { line ->
         val startNumber = find(line)
-        val endNumber = find(line.reversed(), t = Tree(digits.map { it.reversed() }, true))
-        sumP2 += startNumber * 10 + endNumber
+        val endNumber = findReversed(line.reversed())
+        sum2 += startNumber * 10 + endNumber
     }
 
-    println(sumP2)
+    println(sum2)
 
+    // Part 2, method 2
     var sum3 = 0
     Path("src/input/Day1.txt").forEachLine { line ->
         var startNumber = -1
@@ -43,17 +47,6 @@ fun main() {
             }
         }
         sum3 += startNumber * 10 + endNumber
-
-        val startNumber2 = find(line)
-        val endNumber2 = find(line.reversed(), t = Tree(digits.map { it.reversed() }, true))
-        if (startNumber != startNumber2) {
-            println("failed start")
-            println(line)
-        }
-        if (endNumber != endNumber2) {
-            println("failed end")
-            println(line)
-        }
     }
     println(sum3)
 }
