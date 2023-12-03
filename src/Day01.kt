@@ -11,6 +11,51 @@ fun main() {
     }
 
     println(sum)
+
+    var sumP2 = 0
+    Path("src/input/Day1.txt").forEachLine { line ->
+        val startNumber = find(line)
+        val endNumber = find(line.reversed(), t = Tree(digits.map { it.reversed() }, true))
+        sumP2 += startNumber * 10 + endNumber
+    }
+
+    println(sumP2)
+
+    var sum3 = 0
+    Path("src/input/Day1.txt").forEachLine { line ->
+        var startNumber = -1
+        var startNumberIndex = line.length + 1
+        for (d in digits) {
+            val index = line.indexOf(d)
+            if (index != -1 && index < startNumberIndex) {
+                startNumberIndex = index
+                startNumber = toDigit(d)
+            }
+        }
+
+        var endNumber = -1
+        var endNumberIndex = -1
+        for (d in digits) {
+            val index = line.lastIndexOf(d)
+            if (index > endNumberIndex) {
+                endNumberIndex = index
+                endNumber = toDigit(d)
+            }
+        }
+        sum3 += startNumber * 10 + endNumber
+
+        val startNumber2 = find(line)
+        val endNumber2 = find(line.reversed(), t = Tree(digits.map { it.reversed() }, true))
+        if (startNumber != startNumber2) {
+            println("failed start")
+            println(line)
+        }
+        if (endNumber != endNumber2) {
+            println("failed end")
+            println(line)
+        }
+    }
+    println(sum3)
 }
 
 fun parseNumber(s: String): Int {
@@ -31,4 +76,28 @@ fun parseNumberInverse(s : String): Int {
     }
 
     throw IllegalArgumentException()
+}
+
+private fun toDigit(word: String): Int {
+    return when (word) {
+        one  -> 1
+        two -> 2
+        three -> 3
+        four -> 4
+        five -> 5
+        six -> 6
+        seven -> 7
+        eight -> 8
+        nine -> 9
+        "1"  -> 1
+        "2" -> 2
+        "3" -> 3
+        "4" -> 4
+        "5" -> 5
+        "6" -> 6
+        "7" -> 7
+        "8" -> 8
+        "9" -> 9
+        else -> throw IllegalArgumentException()
+    }
 }
